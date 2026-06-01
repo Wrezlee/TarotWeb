@@ -124,7 +124,7 @@
             </form>
 
             <div class="signup-link">
-                <p>New to our platform? <a href="{{route('register.post')}}">Create account</a></p>
+                <p>New to our platform? <a href="{{route('register')}}">Create account</a></p>
             </div>
 
             <div class="success-message" id="successMessage">

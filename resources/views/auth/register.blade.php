@@ -23,7 +23,6 @@
         <div class="particle"></div>
     </div>
 
-    
     {{-- ✅ 30 TAROT CARDS BACKGROUND --}}
     <div class="tarot-bg" aria-hidden="true">
         <div class="tarot-card tc1"><div class="tarot-card-inner"><div class="tarot-card-back"></div><div class="tarot-border-outer"></div><div class="tarot-border-inner"></div><div class="tarot-dot tl"></div><div class="tarot-dot tr"></div><div class="tarot-dot bl"></div><div class="tarot-dot br"></div><div class="tarot-symbol">☽</div></div></div>
@@ -58,7 +57,7 @@
         <div class="tarot-card tc30"><div class="tarot-card-inner"><div class="tarot-card-back"></div><div class="tarot-border-outer"></div><div class="tarot-border-inner"></div><div class="tarot-dot tl"></div><div class="tarot-dot tr"></div><div class="tarot-dot bl"></div><div class="tarot-dot br"></div><div class="tarot-symbol">★</div></div></div>
     </div>
     {{-- ✅ END TAROT CARDS --}}
-    
+
     <div class="login-container">
         <div class="login-card">
             <div class="card-glow"></div>
@@ -74,31 +73,46 @@
                 <h2>Create Account</h2>
                 <p>Register To Start your journey</p>
             </div>
-            
+
+            {{-- Tampilkan error validasi --}}
+            @if ($errors->any())
+                <div style="background:rgba(255,0,0,0.15); border:1px solid red; border-radius:8px; padding:10px 16px; margin-bottom:16px; color:#ff6b6b; font-size:14px;">
+                    <ul style="margin:0; padding-left:18px;">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form method="POST" action="/register" class="login-form">
                 @csrf
+
+                {{-- Name --}}
                 <div class="form-group">
                     <div class="input-container">
                         <div class="input-bg"></div>
-                        <input type="text" name="name" required placeholder=" ">
-                        <label>Full Name</label>
+                        <input type="text" id="name" name="name" required placeholder=" " value="{{ old('name') }}">
+                        <label for="name">Full Name</label>
                         <div class="input-wave"></div>
                     </div>
                 </div>
+
+                {{-- Email --}}
                 <div class="form-group">
                     <div class="input-container">
                         <div class="input-bg"></div>
-                        <input type="email" id="email" name="email" required autocomplete="email" placeholder=" ">
+                        <input type="email" id="email" name="email" required autocomplete="email" placeholder=" " value="{{ old('email') }}">
                         <label for="email">Email Address</label>
                         <div class="input-wave"></div>
                     </div>
-                    <span class="error-message" id="emailError"></span>
                 </div>
 
+                {{-- Password --}}
                 <div class="form-group">
                     <div class="input-container password-container">
                         <div class="input-bg"></div>
-                        <input type="password" id="password" name="password" required autocomplete="current-password" placeholder=" ">
+                        <input type="password" id="password" name="password" required autocomplete="new-password" placeholder=" ">
                         <label for="password">Password</label>
                         <button type="button" class="password-toggle" id="passwordToggle" aria-label="Toggle password visibility">
                             <div class="toggle-bg"></div>
@@ -115,14 +129,15 @@
                         </button>
                         <div class="input-wave"></div>
                     </div>
-                    <span class="error-message" id="passwordError"></span>
                 </div>
+
+                {{-- Confirm Password — ID dan name diperbaiki --}}
                 <div class="form-group">
                     <div class="input-container password-container">
                         <div class="input-bg"></div>
-                        <input type="password" id="password" name="password_confirmation" required autocomplete="current-password" placeholder=" ">
-                        <label for="password">Confirm Password</label>
-                        <button type="button" class="password-toggle" id="passwordToggle" aria-label="Toggle password visibility">
+                        <input type="password" id="password_confirmation" name="password_confirmation" required autocomplete="new-password" placeholder=" ">
+                        <label for="password_confirmation">Confirm Password</label>
+                        <button type="button" class="password-toggle" id="passwordConfirmToggle" aria-label="Toggle confirm password visibility">
                             <div class="toggle-bg"></div>
                             <div class="toggle-icon">
                                 <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -137,8 +152,8 @@
                         </button>
                         <div class="input-wave"></div>
                     </div>
-                    <span class="error-message" id="passwordError"></span>
                 </div>
+
                 <button type="submit" class="gradient-button">
                     <div class="button-bg"></div>
                     <div class="button-content">
@@ -154,7 +169,7 @@
             </form>
 
             <div class="signup-link">
-                <p>Already Have Account? <a href="{{route('login')}}">Sign In</a></p>
+                <p>Already Have Account? <a href="{{ route('login') }}">Sign In</a></p>
             </div>
 
             <div class="success-message" id="successMessage">
@@ -165,14 +180,13 @@
                             <polyline points="20 6 9 17 4 12"/>
                         </svg>
                     </div>
-                    <h3>Welcome back!</h3>
-                    <p>Redirecting to your dashboard...</p>
+                    <h3>Registration Successful!</h3>
+                    <p>Redirecting to login...</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="../../shared/js/form-utils.js"></script>
     <script src="{{ asset('auth/script.js') }}"></script>
 </body>
 </html>
